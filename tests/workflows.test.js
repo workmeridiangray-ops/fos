@@ -13,11 +13,29 @@ process.env.STRIPE_WEBHOOK_SECRET = "test-webhook-secret";
 delete process.env.STRIPE_SECRET_KEY;
 delete process.env.RESEND_API_KEY;
 delete process.env.ASTROLOGY_PROVIDER_URL;
-const { server } = await import("../src/server.js");
-await new Promise((r) => server.listen(0, "127.0.0.1", r));
-const base = `http://127.0.0.1:${server.address().port}`;
+const workerURL = process.env.TEST_WORKER_URL;
+const { server } = workerURL ? {} : await import("../src/server.js");
+if (server) await new Promise((r) => server.listen(0, "127.0.0.1", r));
+const base = workerURL || `http://127.0.0.1:${server.address().port}`;
 process.env.APP_ORIGIN = base;
-const db = new DatabaseSync(join(process.env.DATA_DIR, "flames.sqlite"));
+const proxy = workerURL
+  ? await (
+      await import("wrangler")
+    ).getPlatformProxy({
+      configPath: process.env.TEST_WORKER_CONFIG || "wrangler.test.jsonc",
+      persist: { path: process.env.TEST_WORKER_STATE || ".wrangler/state/v3" },
+    })
+  : null;
+const db = proxy
+  ? proxy.env.DB
+  : new DatabaseSync(join(process.env.DATA_DIR, "flames.sqlite"));
+const seed = async (sql, ...args) =>
+  proxy
+    ? db
+        .prepare(sql)
+        .bind(...args)
+        .run()
+    : db.prepare(sql).run(...args);
 async function request(path, method = "GET", data, cookie = "", headers = {}) {
   const r = await fetch(base + "/api" + path, {
     method,
@@ -51,7 +69,8 @@ async function account(email) {
 test("persistent customer, reader, admin, booking, order and payment workflows", async (t) => {
   try {
     const admin = await account("admin@example.test");
-    db.prepare("UPDATE users SET role='admin',verified=1 WHERE id=?").run(
+    await seed(
+      "UPDATE users SET role='admin',verified=1 WHERE id=?",
       admin.user.id,
     );
     const customer = await account("customer@example.test"),
@@ -240,7 +259,8 @@ test("persistent customer, reader, admin, booking, order and payment workflows",
           ).status,
           403,
         );
-        db.prepare("UPDATE users SET verified=1 WHERE id IN (?,?)").run(
+        await seed(
+          "UPDATE users SET verified=1 WHERE id IN (?,?)",
           customer.user.id,
           other.user.id,
         );
@@ -640,9 +660,8 @@ test("persistent customer, reader, admin, booking, order and payment workflows",
     await t.test(
       "scheduled session chat, shared files, private notes and completion",
       async () => {
-        db.prepare(
+        await seed(
           "UPDATE slots SET starts=?,ends=? WHERE id=(SELECT slot FROM bookings WHERE id=?)",
-        ).run(
           new Date(Date.now() - 60000).toISOString(),
           new Date(Date.now() + 60000).toISOString(),
           bookingId,
@@ -856,8 +875,9 @@ test("persistent customer, reader, admin, booking, order and payment workflows",
       },
     );
   } finally {
-    await new Promise((r) => server.close(r));
-    db.close();
+    if (server) await new Promise((r) => server.close(r));
+    if (proxy) await proxy.dispose();
+    else db.close();
     rmSync(process.env.DATA_DIR, { recursive: true, force: true });
   }
 });
