@@ -15,6 +15,7 @@ for (const f of [
   "package.json",
   "package-lock.json",
   ".env.example",
+  "wrangler.jsonc",
 ])
   cpSync(f, "dist/" + f, { recursive: true });
 console.log(

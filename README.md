@@ -1,6 +1,6 @@
 # Flames of Shiva
 
-A working Node 24 application with a responsive branded frontend, SQLite persistence, customer/reader/admin access controls, astronomical positions, numerology, reflective tarot, reader onboarding, appointment reservations, persistent consultation chat, palmistry delivery, support and a configurable shop.
+A working Node 24 and Cloudflare Workers application with a responsive branded frontend, SQLite persistence, customer/reader/admin access controls, astronomical positions, numerology, reflective tarot, reader onboarding, appointment reservations, persistent consultation chat, palmistry delivery, support and a configurable shop.
 
 **Status:** substantial implementation, not a production-complete fulfilment of the entire brief. See [the precise completion report](docs/COMPLETION.md). Vedic reports await the provider the owner will supply. Provider credentials are intentionally absent. No real payments, email deliveries, video calls, refunds or payouts have been claimed or executed.
 
@@ -43,13 +43,16 @@ npm test
 npm run build
 ```
 
-`check` validates JavaScript syntax; this is a JavaScript application, so no TypeScript compiler is configured. `lint` applies ESLint correctness checks. `test` exercises calculations and HTTP workflows against a fresh temporary SQLite database. `build` creates a server deployment bundle in `dist/`; it is not a static-only site.
+`check` validates JavaScript syntax. `npm run check:cloudflare` generates platform binding types and checks the TypeScript Worker entry point. `npm run test:cloudflare` runs the workflow and concurrency tests against isolated local D1/R2 bindings. `lint` applies ESLint correctness checks. `test` exercises calculations and HTTP workflows against a fresh temporary SQLite database. `build` creates a server deployment bundle in `dist/`; it is not a static-only site.
 
 ## Architecture
 
 - `public/app.js`: accessible DOM components, routing, forms, state and API client.
 - `public/styles.css`: black navigation, cream surfaces, gold accents, responsive layouts and print styles.
-- `src/server.js`: HTTP API, sessions, ownership checks, SQLite repositories, uploads, bookings, shop, operations and webhooks.
+- `src/application.js`: shared API, sessions, permissions, bookings, shop, operations and webhooks.
+- `src/server.js`: Node HTTP, native SQLite, private disk and Sharp adapters.
+- `src/worker.ts`: Cloudflare D1/R2, rate limits and static asset bindings.
+- `src/sql-store.js`: atomic batches with optimistic snapshot validation and retries.
 - `src/calculations.js`: Astronomy Engine, Luxon, explicit Pythagorean rules and secure Major Arcana shuffle.
 - `src/integrations.js`: Resend, Stripe, Daily and the Vedic contract adapter.
 - `migrations/`: ordered transactional schema migrations recorded in `schema_versions`.
@@ -57,3 +60,13 @@ npm run build
 - `docs/`: inventory, workflows, permissions, integration contracts, visual review and remaining work.
 
 The checkout is linked to https://github.com/workmeridiangray-ops/fos.git, which was empty when inspected. The Framer project was inspected read-only; it has not been modified.
+
+## Cloudflare
+
+The full frontend and backend can run on Workers with D1 for relational data and private R2 for uploads. See [deployment instructions](docs/DEPLOYMENT.md). External provider credentials are still required for email, payments, calls and Vedic reports. GitHub contains the source; deployments currently use Wrangler rather than automatic GitHub builds.
+
+```sh
+npm run dev:cloudflare
+npm run check:cloudflare
+npm run test:cloudflare
+```

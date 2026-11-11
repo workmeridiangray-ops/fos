@@ -13,18 +13,29 @@
     "check": "node --check src/server.js && node --check public/app.js",
     "build": "node scripts-build.js",
     "lint": "eslint .",
-    "format": "prettier --write src public/*.js public/*.css tests *.js *.json"
+    "format": "prettier --write src public/*.js public/*.css tests *.js *.json",
+    "dev:cloudflare": "wrangler dev",
+    "deploy:cloudflare": "wrangler deploy",
+    "check:cloudflare": "wrangler types && tsc --noEmit -p tsconfig.worker.json",
+    "test:cloudflare": "node scripts-test-worker.js"
   },
   "dependencies": {
+    "@photostructure/tz-lookup": "^11.8.0",
     "astronomy-engine": "^2.1.19",
+    "fast-png": "^8.0.0",
     "geo-tz": "^8.1.11",
+    "jpeg-js": "^0.4.4",
     "luxon": "^3.7.2",
     "sharp": "^0.35.5"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261110.1",
+    "@types/node": "^26.6.6",
     "eslint": "^10.14.0",
     "globals": "^17.14.0",
-    "prettier": "^3.10.0"
+    "prettier": "^3.10.0",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.160.1"
   },
   "overrides": {
     "minimatch": "^11.0.1"

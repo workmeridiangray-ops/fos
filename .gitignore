@@ -3,3 +3,9 @@ data/
 .env
 *.log
 dist/
+.wrangler/
+.dev.vars
+.dev.vars.*
+worker-configuration.d.ts
+
+wrangler.test.jsonc
