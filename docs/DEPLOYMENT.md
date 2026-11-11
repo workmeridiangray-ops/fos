@@ -1,6 +1,29 @@
 # Deployment
 
-Target a Node 24 service with a persistent encrypted disk. This application is not a static export and is not compatible with Cloudflare Workers' Node SQLite environment. Do not deploy `public/` alone or place private data in public storage.
+## Cloudflare Workers, D1 and private R2
+
+The repository includes a complete Worker backend adapter, not just a frontend export. `src/application.js` is shared with the Node server. `wrangler.jsonc` identifies the owner account, D1 database and private R2 bucket; those identifiers are not secrets. There is no automatic GitHub deployment configured.
+
+1. Run `npm ci`, `npm run check`, `npm run lint`, `npm test`, `npm run check:cloudflare`, and `npm run test:cloudflare`.
+2. Authenticate with `npx wrangler login` and verify `npx wrangler whoami`.
+3. For a different account, create a D1 database and private R2 bucket, then update account/database/bucket identifiers in `wrangler.jsonc`. Keep the bucket private; file access passes through authenticated API permission checks.
+4. Apply schema with `npx wrangler d1 migrations apply flames-of-shiva --remote`. Back up first on subsequent releases.
+5. Set each actual integration secret using `npx wrangler secret put NAME`: `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_EMAIL`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `DAILY_API_KEY`, `ASTROLOGY_PROVIDER_URL`, `ASTROLOGY_PROVIDER_KEY`, and optional contracted `GEOCODER_URL`. Only set integrations in use. Never use fixture values from the isolated test runner on the deployed service.
+6. Run `npx wrangler deploy --dry-run`, then `npm run deploy:cloudflare`. Use `npx wrangler deploy --keep-vars` if retaining dashboard variables. The empty `APP_ORIGIN` uses the incoming HTTPS origin; set an exact canonical origin for a custom domain. Do not copy localhost `APP_ORIGIN` from the Node example into production secrets.
+7. Verify HTTPS, public routes/assets, API permissions, provider setup-required states and a real provider test-mode end-to-end workflow before enabling sales.
+8. Create and email-verify the designated administrator after configuring email delivery. Administration is never granted merely by entering an unverified email.
+
+Worker rate-limit bindings protect API, authentication and code requests. D1 batches atomically commit related updates; a database revision guard validates all reads and retries concurrent changes. Every application write uses the shared SQL store. Do not bypass it with competing live administrative SQL writes during transactions. Private uploads are written to R2 before their metadata is saved. Configure retention of orphaned uploads and restore-test D1/R2 backups together.
+
+The Cloudflare image adapter decodes/re-encodes PNG/JPEG, removes metadata and bounds decoded image size to four megapixels and input size to 5 MB. Unlike the Node Sharp adapter, it does not auto-rotate EXIF orientation or downscale large originals. Export correctly oriented, smaller images before upload. PDF checks are defensive format checks, not malware scanning.
+
+Birthplace timezone suggestions in the Worker use `@photostructure/tz-lookup`; the Node host uses `geo-tz`. Both produce IANA zone names. Boundary suggestions must be confirmed/corrected by the user. Astronomical calculations use the submitted timezone, coordinates and recorded UTC instant.
+
+`npm run test:cloudflare` starts a local Worker with temporary D1/R2 storage and disposable fixture secrets, runs the API and concurrency tests, then removes that storage. It never writes test records or test credentials to the remote application.
+
+## Node 24 with persistent disk
+
+The original Node host remains supported. `public/` alone cannot provide the backend.
 
 1. Run `npm ci`, `npm run check`, `npm run lint`, `npm test`, `npm run build`.
 2. Deploy the repository (or the server bundle under `dist`) to a Node service.
