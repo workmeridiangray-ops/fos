@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2026 Flames of Shiva contributors
 import http from "node:http";
 import sharp from "sharp";
 import { find as coordinateTimezones } from "geo-tz";

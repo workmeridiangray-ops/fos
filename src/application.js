@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2026 Flames of Shiva contributors
 import {
   randomUUID,
   randomBytes,
@@ -7,6 +9,7 @@ import {
   randomInt,
 } from "node:crypto";
 import { kundli, numerology, tarot, birthInstant } from "./calculations.js";
+import { kundliRoutes } from "./kundli-routes.js";
 export function createApplication(runtime) {
   const {
     env,
@@ -531,6 +534,7 @@ export function createApplication(runtime) {
           email: !!(env.RESEND_API_KEY && env.EMAIL_FROM),
           payments: !!env.STRIPE_SECRET_KEY,
           vedic: !!env.ASTROLOGY_PROVIDER_URL,
+          kundli: !!(env.CHART_API_URL && env.CHART_API_KEY),
           voiceVideo: !!env.DAILY_API_KEY,
           storage: runtime.storageDescription || "Private local disk",
           development: env.NODE_ENV !== "production",
@@ -770,6 +774,24 @@ export function createApplication(runtime) {
           return reply(updated);
         }
       }
+      if (
+        await kundliRoutes({
+          path,
+          method,
+          url,
+          u,
+          requireUser,
+          body,
+          req,
+          reply,
+          one,
+          all,
+          run,
+          rate,
+          env,
+        })
+      )
+        return;
       if (path === "/api/calculate" && method === "POST") {
         const d = await body(req);
         let result;

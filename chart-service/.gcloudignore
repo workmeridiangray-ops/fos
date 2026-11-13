@@ -1,0 +1,16 @@
+*
+!Dockerfile
+!.dockerignore
+!.gcloudignore
+!requirements.txt
+!api.py
+!engine_job.py
+!vendor/
+!vendor/**
+!licenses/
+!licenses/**
+!NOTICE.md
+__pycache__/
+*.pyc
+!LICENSE
+!SOURCE.md

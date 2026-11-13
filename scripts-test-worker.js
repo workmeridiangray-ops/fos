@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2026 Flames of Shiva contributors
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve, join } from "node:path";
@@ -24,6 +26,7 @@ const statePath = join(scratch, "state");
 const env = {
   ...process.env,
   WRANGLER_SEND_METRICS: "false",
+  WRANGLER_REGISTRY_PATH: join(scratch, "registry"),
   WRANGLER_LOG_PATH: join(scratch, "logs"),
 };
 const cli = resolve(root, "node_modules/wrangler/bin/wrangler.js");

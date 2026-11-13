@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2026 Flames of Shiva contributors
 import sharp from "sharp";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -872,6 +874,85 @@ test("persistent customer, reader, admin, booking, order and payment workflows",
           ).status,
           400,
         );
+      },
+    );
+    await t.test(
+      "kundli setup failure retains a private run on both database adapters",
+      async () => {
+        const owner = await account("kundli-owner@example.test");
+        const stranger = await account("kundli-stranger@example.test");
+        const result = await request(
+          "/kundli/runs",
+          "POST",
+          {
+            input: {
+              name: "Runtime test",
+              date: "1990-05-12",
+              time: "10:30",
+              timezone: "Asia/Kolkata",
+              place: "Mumbai",
+              latitude: 19.076,
+              longitude: 72.8777,
+            },
+            requestKey: "worker-private-run",
+          },
+          owner.cookie,
+        );
+        assert.equal(result.status, 503);
+        const runs = await request(
+          "/kundli/runs",
+          "GET",
+          undefined,
+          owner.cookie,
+        );
+        assert.equal(runs.data[0].state, "error");
+        const id = runs.data[0].id;
+        assert.equal(
+          (
+            await request(
+              "/kundli/runs/" + id,
+              "GET",
+              undefined,
+              stranger.cookie,
+            )
+          ).status,
+          404,
+        );
+        assert.equal(
+          (
+            await request(
+              "/kundli/runs/" + id,
+              "DELETE",
+              undefined,
+              stranger.cookie,
+            )
+          ).status,
+          404,
+        );
+        assert.equal(
+          (
+            await request(
+              "/kundli/runs/" + id,
+              "DELETE",
+              undefined,
+              owner.cookie,
+            )
+          ).status,
+          200,
+        );
+      },
+    );
+    await t.test(
+      "source and licence offer is available without a customer session",
+      async () => {
+        const source = await fetch(base + "/source.html");
+        assert.equal(source.status, 200);
+        const html = await source.text();
+        assert.match(html, /kundli-agpl-v1/);
+        assert.match(html, /GNU Affero General Public License/);
+        const licence = await fetch(base + "/AGPL-3.0.txt");
+        assert.equal(licence.status, 200);
+        assert.match(await licence.text(), /GNU AFFERO GENERAL PUBLIC LICENSE/);
       },
     );
   } finally {

@@ -70,3 +70,13 @@ npm run dev:cloudflare
 npm run check:cloudflare
 npm run test:cloudflare
 ```
+
+
+## New kundli workspace
+
+The complete local kundli integration uses a separate isolated Python calculation service. See [integration and API mapping](docs/kundli-integration.md), [Cloud Run deployment](docs/kundli-cloudrun.md), [licence notices](chart-service/NOTICE.md) and [verified completion / remaining setup](docs/kundli-completion.md). The new service is not yet public; Google CLI login is verified; public source publication, enabled project billing and a container build are still required.
+
+
+## Licence and corresponding source
+
+Original application and integration code: **GNU Affero General Public License, version 3 only**. See [LICENSE](LICENSE), [third-party notices and dependency source](THIRD_PARTY_NOTICES.md), and [calculation notices](chart-service/NOTICE.md). The owner selected this free licence route on 13 November 2026. Customer records and credentials remain private. The complete source release is `kundli-agpl-v1`; source links are available on the website and the chart service. The code licence grants no trademark rights.

@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-12T16:59:46.205666+00:00",
+  "title": "Design System: Flames of Shiva Kundli Workspace",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Primary",
+        "tonalRamp": [
+          "oklch(15% 0.0785 78.79)",
+          "oklch(26% 0.0785 78.79)",
+          "oklch(38% 0.0785 78.79)",
+          "oklch(49% 0.0785 78.79)",
+          "oklch(61% 0.0785 78.79)",
+          "oklch(72% 0.0785 78.79)",
+          "oklch(84% 0.0785 78.79)",
+          "oklch(95% 0.0785 78.79)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Primary Hover",
+        "tonalRamp": [
+          "oklch(15% 0.0686 76.51)",
+          "oklch(26% 0.0686 76.51)",
+          "oklch(38% 0.0686 76.51)",
+          "oklch(49% 0.0686 76.51)",
+          "oklch(61% 0.0686 76.51)",
+          "oklch(72% 0.0686 76.51)",
+          "oklch(84% 0.0686 76.51)",
+          "oklch(95% 0.0686 76.51)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Accent",
+        "tonalRamp": [
+          "oklch(15% 0.0843 80.31)",
+          "oklch(26% 0.0843 80.31)",
+          "oklch(38% 0.0843 80.31)",
+          "oklch(49% 0.0843 80.31)",
+          "oklch(61% 0.0843 80.31)",
+          "oklch(72% 0.0843 80.31)",
+          "oklch(84% 0.0843 80.31)",
+          "oklch(95% 0.0843 80.31)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "tonalRamp": [
+          "oklch(15% 0.0040 106.47)",
+          "oklch(26% 0.0040 106.47)",
+          "oklch(38% 0.0040 106.47)",
+          "oklch(49% 0.0040 106.47)",
+          "oklch(61% 0.0040 106.47)",
+          "oklch(72% 0.0040 106.47)",
+          "oklch(84% 0.0040 106.47)",
+          "oklch(95% 0.0040 106.47)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0039 106.47)",
+          "oklch(26% 0.0039 106.47)",
+          "oklch(38% 0.0039 106.47)",
+          "oklch(49% 0.0039 106.47)",
+          "oklch(61% 0.0039 106.47)",
+          "oklch(72% 0.0039 106.47)",
+          "oklch(84% 0.0039 106.47)",
+          "oklch(95% 0.0039 106.47)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0046 174.12)",
+          "oklch(26% 0.0046 174.12)",
+          "oklch(38% 0.0046 174.12)",
+          "oklch(49% 0.0046 174.12)",
+          "oklch(61% 0.0046 174.12)",
+          "oklch(72% 0.0046 174.12)",
+          "oklch(84% 0.0046 174.12)",
+          "oklch(95% 0.0046 174.12)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0086 132.49)",
+          "oklch(26% 0.0086 132.49)",
+          "oklch(38% 0.0086 132.49)",
+          "oklch(49% 0.0086 132.49)",
+          "oklch(61% 0.0086 132.49)",
+          "oklch(72% 0.0086 132.49)",
+          "oklch(84% 0.0086 132.49)",
+          "oklch(95% 0.0086 132.49)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border",
+        "tonalRamp": [
+          "oklch(15% 0.0107 106.61)",
+          "oklch(26% 0.0107 106.61)",
+          "oklch(38% 0.0107 106.61)",
+          "oklch(49% 0.0107 106.61)",
+          "oklch(61% 0.0107 106.61)",
+          "oklch(72% 0.0107 106.61)",
+          "oklch(84% 0.0107 106.61)",
+          "oklch(95% 0.0107 106.61)"
+        ]
+      },
+      "selected": {
+        "role": "neutral",
+        "displayName": "Selected",
+        "tonalRamp": [
+          "oklch(15% 0.0193 90.54)",
+          "oklch(26% 0.0193 90.54)",
+          "oklch(38% 0.0193 90.54)",
+          "oklch(49% 0.0193 90.54)",
+          "oklch(61% 0.0193 90.54)",
+          "oklch(72% 0.0193 90.54)",
+          "oklch(84% 0.0193 90.54)",
+          "oklch(95% 0.0193 90.54)"
+        ]
+      },
+      "period-surface": {
+        "role": "neutral",
+        "displayName": "Period Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0136 92.98)",
+          "oklch(26% 0.0136 92.98)",
+          "oklch(38% 0.0136 92.98)",
+          "oklch(49% 0.0136 92.98)",
+          "oklch(61% 0.0136 92.98)",
+          "oklch(72% 0.0136 92.98)",
+          "oklch(84% 0.0136 92.98)",
+          "oklch(95% 0.0136 92.98)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Workspace heading",
+        "purpose": "Page headings; responsive reduction applies."
+      },
+      "title": {
+        "displayName": "Card title",
+        "purpose": "Section headings."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "loading-spin",
+        "value": "0.9s linear infinite",
+        "purpose": "Pending calculation ring; disabled by prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1600px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1180px"
+      },
+      {
+        "name": "mobile-navigation",
+        "value": "900px"
+      },
+      {
+        "name": "stacked-content",
+        "value": "650px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "description": "Create a chart or submit a principal action.",
+      "html": "<button class=\"ds-button\">New chart</button>",
+      "css": ".ds-button{font-family:\"DM Sans\",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid #dedfd5;border-radius:7px;padding:10px 15px;font-size:13px;line-height:1.3;font-weight:500;cursor:pointer;}.ds-button{background:#80622f;border-color:#80622f;color:white}.ds-button:hover{background:#6b5026}.ds-button:focus-visible{outline:2px solid #84652c;outline-offset:4px}",
+      "refersTo": "button-primary"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "description": "A supporting workspace action.",
+      "html": "<button class=\"ds-button\">Print / Save PDF</button>",
+      "css": ".ds-button{font-family:\"DM Sans\",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid #dedfd5;border-radius:7px;padding:10px 15px;font-size:13px;line-height:1.3;font-weight:500;cursor:pointer;}.ds-button{background:#fffffc;color:#3d4039}.ds-button:hover{background:#f0eee5;border-color:#b8aa88}.ds-button:focus-visible{outline:2px solid #84652c;outline-offset:4px}",
+      "refersTo": "button-secondary"
+    },
+    {
+      "name": "Birth Detail Field",
+      "kind": "input",
+      "description": "Labeled profile field.",
+      "html": "<label class=\"ds-field\">Profile name<input placeholder=\"Profile name\"></label>",
+      "css": ".ds-field{font-family:\"DM Sans\",sans-serif;display:flex;flex-direction:column;gap:8px;font-size:13px;color:#464d3c}.ds-field input{font-family:\"DM Sans\",sans-serif;background:#fffefa;color:#2f352b;border:1px solid #d9ddcf;border-radius:6px;min-height:44px;padding:10px 12px;font-size:14px}.ds-field input:focus-visible{outline:2px solid #84652c;outline-offset:4px}"
+    },
+    {
+      "name": "Workspace Card",
+      "kind": "card",
+      "description": "A quiet bordered content container.",
+      "html": "<section class=\"ds-card\"><h2>Birth chart</h2><p>Chart placements and supporting details.</p></section>",
+      "css": ".ds-card{font-family:\"DM Sans\",sans-serif;background:#fffffc;color:#292c2b;border:1px solid #e5e5dd;border-radius:13px;padding:22px}.ds-card h2{font-size:19px;font-weight:600;line-height:1.35;letter-spacing:-.025em;margin:0 0 12px}.ds-card p{font-size:13px;color:#636661;line-height:1.65;margin:6px 0 12px}",
+      "refersTo": "card"
+    },
+    {
+      "name": "Workspace Navigation",
+      "kind": "nav",
+      "description": "Desktop current-page treatment.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Workspace\"><a href=\"#overview\" aria-current=\"page\">My kundli</a><a href=\"#saved\">Saved charts</a></nav>",
+      "css": ".ds-nav{font-family:\"DM Sans\",sans-serif;display:grid;gap:9px}.ds-nav a{color:#292c2b;text-decoration:none;padding:12px;border-radius:9px;font-size:14px;line-height:1.4}.ds-nav a[aria-current]{color:#6e5429;background:#f2eddf;font-weight:600}.ds-nav a:hover{background:#f5f3ec}.ds-nav a:focus-visible{outline:2px solid #84652c;outline-offset:4px}"
+    },
+    {
+      "name": "Current Status",
+      "kind": "chip",
+      "description": "Written status on active periods.",
+      "html": "<span class=\"ds-status\">Current</span>",
+      "css": ".ds-status{font-family:\"DM Sans\",sans-serif;display:inline-block;background:#e6ecd9;color:#4a5f35;border-radius:4px;padding:3px 6px;font-size:10px}"
+    },
+    {
+      "name": "Chart Segmented Control",
+      "kind": "custom",
+      "description": "Chart-division selection.",
+      "html": "<div class=\"ds-segment\" role=\"group\" aria-label=\"Chart division\"><button aria-pressed=\"true\">D1</button><button aria-pressed=\"false\">D9</button><button aria-pressed=\"false\">D10</button></div>",
+      "css": ".ds-segment{display:inline-flex;border:1px solid #dedfd5;border-radius:6px;overflow:hidden}.ds-segment button{font-family:\"DM Sans\",sans-serif;font-size:12px;background:#fffffc;border:0;padding:10px;min-height:39px;color:#666b5f;cursor:pointer}.ds-segment button[aria-pressed=\"true\"]{color:#74582c;background:#f2edde;font-weight:600}.ds-segment button:focus-visible{outline:2px solid #84652c;outline-offset:-3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Private Chart Workspace",
+    "overview": "This record applies only to the private kundli workspace, governed by supplied-flames-kundli-2026. Warm white surfaces, graphite text, restrained champagne gold and DM Sans support a dense but calm working chart. The official supplied wordmark and emblem remain the identity assets.\n\nThe recorded implementation is public/kundli.css and public/kundli.js, reviewed at desktop and mobile sizes. The existing marketing identity in public/styles.css remains outside this record. Print styles exist, but print/PDF output was not visually verified and is not certified by this design record.",
+    "keyCharacteristics": [
+      "Fine borders and tonal separation rather than card shadows.",
+      "Compact sans-serif hierarchy with chart geometry as the visual anchor.",
+      "Desktop sidebar; mobile stacked cards and persistent bottom navigation.",
+      "Official wordmark and emblem, without replacement logo artwork."
+    ],
+    "rules": [
+      {
+        "name": "The Scoped Palette Rule",
+        "body": "These tokens describe the kundli workspace; the marketing stylesheet retains its own palette and typography.",
+        "section": "colors"
+      },
+      {
+        "name": "The Border Before Shadow Rule",
+        "body": "Use the existing border and tonal vocabulary for workspace containers rather than adding raised card shadows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep this system scoped to the kundli workspace.",
+      "Do use the supplied official wordmark and emblem assets.",
+      "Do preserve calculated placements, legends and accessible house summaries.",
+      "Do keep the expanded mobile chart scrollable at its readable fixed drawing width.",
+      "Do retain visible keyboard focus and semantic headings."
+    ],
+    "donts": [
+      "Don't apply this record as a marketing-site redesign.",
+      "Don't shrink the expanded chart to fit a phone at the expense of placement legibility.",
+      "Don't substitute illustrative mockup values for calculated data.",
+      "Don't describe the print/PDF presentation as reviewed until it has been rendered and checked."
+    ]
+  }
+}

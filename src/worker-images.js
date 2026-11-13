@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2026 Flames of Shiva contributors
 import { decode as decodePNG, encode as encodePNG } from "fast-png";
 import jpeg from "jpeg-js";
 

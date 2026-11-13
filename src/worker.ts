@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2026 Flames of Shiva contributors
 import timezoneLookup from "@photostructure/tz-lookup";
 import { createApplication } from "./application.js";
 import { createIntegrations } from "./integrations.js";

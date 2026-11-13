@@ -1,0 +1,13 @@
+*
+!requirements.txt
+!api.py
+!engine_job.py
+!vendor/
+!vendor/**
+**/__pycache__
+**/*.pyc
+!licenses/
+!licenses/**
+!NOTICE.md
+!LICENSE
+!SOURCE.md

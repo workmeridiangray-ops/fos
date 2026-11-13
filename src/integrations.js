@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2026 Flames of Shiva contributors
 import { createHmac, timingSafeEqual } from "node:crypto";
 export class SetupRequired extends Error {
   constructor(message) {

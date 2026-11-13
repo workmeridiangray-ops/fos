@@ -126,22 +126,22 @@ header {
   object-fit: contain;
   filter: brightness(1.9);
 }
-nav {
+#header nav {
   display: flex;
   gap: 27px;
   align-items: center;
   margin-left: auto;
   font-size: 13px;
 }
-nav a {
+#header nav a {
   padding: 10px 0;
   color: #c7c8be;
 }
-nav a:hover,
-nav a.active {
+#header nav a:hover,
+#header nav a.active {
   color: #e9bd6a;
 }
-nav .nav-account {
+#header nav .nav-account {
   border: 1px solid #6d6246;
   padding: 11px 18px;
   border-radius: 6px;
@@ -981,7 +981,7 @@ details p {
   .nav {
     gap: 15px;
   }
-  nav {
+  #header nav {
     gap: 16px;
   }
   .brand,
@@ -1038,7 +1038,7 @@ details p {
     padding: 8px 12px;
     font-size: 12px;
   }
-  nav {
+  #header nav {
     display: none;
     position: absolute;
     top: 72px;
@@ -1051,10 +1051,10 @@ details p {
     margin: 0;
     gap: 10px;
   }
-  nav.open {
+  #header nav.open {
     display: flex;
   }
-  nav a {
+  #header nav a {
     padding: 10px;
   }
   .hero {

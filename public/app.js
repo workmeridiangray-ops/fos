@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (c) 2026 Flames of Shiva contributors
+import { mountKundli } from "./kundli.js";
 const $ = (s) => document.querySelector(s),
   $$ = (s) => [...document.querySelectorAll(s)];
 const esc = (v) =>
@@ -126,7 +129,7 @@ function shell() {
     );
   };
   $("#footer").innerHTML =
-    `<div class="container"><div class="footer-grid"><div><div class="footer-brand">Flames of Shiva</div><p>A thoughtful space for ancient wisdom, personal reflection and a deeper understanding of yourself.</p></div><div><h4>Explore the practices</h4><div class="footer-links">${services.map((s) => link("/" + s[0], s[1])).join("")}${link("/compatibility-details", "Compatibility")}</div></div><div><h4>Your journey</h4><div class="footer-links">${link("/reader-search", "Find a reader")}${link("/customer-dashboard", "Your account")}${link("/blog", "The journal")}${link("/daily-horoscope", "Daily horoscope")}</div></div><div><h4>Here to help</h4><div class="footer-links">${link("/about", "Our story")}${link("/help", "Help centre")}${link("/contact", "Contact us")}${link("/reader-application", "Become a reader")}</div></div></div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Flames of Shiva. All rights reserved.</span><span>Spiritual practices offer reflection. Your choices remain your own.</span></div></div>`;
+    `<div class="container"><div class="footer-grid"><div><div class="footer-brand">Flames of Shiva</div><p>A thoughtful space for ancient wisdom, personal reflection and a deeper understanding of yourself.</p></div><div><h4>Explore the practices</h4><div class="footer-links">${services.map((s) => link("/" + s[0], s[1])).join("")}${link("/compatibility-details", "Compatibility")}</div></div><div><h4>Your journey</h4><div class="footer-links">${link("/reader-search", "Find a reader")}${link("/customer-dashboard", "Your account")}${link("/blog", "The journal")}${link("/daily-horoscope", "Daily horoscope")}</div></div><div><h4>Here to help</h4><div class="footer-links">${link("/about", "Our story")}${link("/help", "Help centre")}${link("/contact", "Contact us")}${link("/reader-application", "Become a reader")}</div></div></div><div class="footer-bottom"><span>© ${new Date().getFullYear()} Flames of Shiva. <a href="/source.html" target="_blank" rel="noopener">Source code · AGPLv3</a></span><span>Spiritual practices offer reflection. Your choices remain your own.</span></div></div>`;
 }
 const sidebarLinks = [
   ["/customer-dashboard", "Overview"],
@@ -298,7 +301,7 @@ async function dashboard() {
   if (!requireLogin()) return;
   const [profiles, reports, bookings] = await Promise.all([
     recs("profile"),
-    recs("report"),
+    savedReadings(),
     api("/bookings"),
   ]);
   page(
@@ -309,7 +312,7 @@ async function dashboard() {
   );
 }
 function birthFields(prefix = "", data = {}) {
-  return `${field(prefix + "name", "Full name", "text", data.name || "", 'required maxlength="120"')}${field(prefix + "date", "Date of birth", "date", data.date || "", 'required max="' + new Date().toISOString().slice(0, 10) + '"')}${field(prefix + "time", "Time of birth", "time", data.time || "", "")}${field(prefix + "timezone", "Birth timezone (IANA name or UTC offset)", "text", data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone, 'required list="timezones"')}<datalist id="timezones">${["Asia/Kolkata", "Europe/London", "America/New_York", "America/Los_Angeles", "Europe/Paris", "Asia/Dubai", "Asia/Singapore", "Australia/Sydney", "UTC", ...Intl.supportedValuesOf("timeZone")].map((t) => `<option>${esc(t)}</option>`).join("")}</datalist><label class="checkbox field full"><span><input type="checkbox" name="${prefix}unknownTime" ${data.unknownTime ? "checked" : ""}> I do not know the birth time</span><small>We use local noon for approximate planetary positions and do not infer an ascendant.</small></label>${field(prefix + "place", "Birthplace", "text", data.place || "", 'required list="places" placeholder="Search by city or enter a place"')}${field(prefix + "latitude", "Latitude", "number", data.latitude ?? "", 'required min="-90" max="90" step="any" placeholder="e.g. 18.5204"')}${field(prefix + "longitude", "Longitude", "number", data.longitude ?? "", 'required min="-180" max="180" step="any" placeholder="e.g. 73.8567"')}<datalist id="places"><option>Pune, India</option><option>Mumbai, India</option><option>Delhi, India</option><option>London, United Kingdom</option><option>New York, United States</option></datalist>`;
+  return `${field(prefix + "name", "Full name", "text", data.name || "", 'required maxlength="120"')}${field(prefix + "date", "Date of birth", "date", data.date || "", 'required max="' + new Date().toISOString().slice(0, 10) + '"')}${field(prefix + "time", "Time of birth", "time", data.time || "", "")}${field(prefix + "timezone", "Birth timezone (IANA name or UTC offset)", "text", data.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone, 'required list="timezones"')}<datalist id="timezones">${["Asia/Kolkata", "Europe/London", "America/New_York", "America/Los_Angeles", "Europe/Paris", "Asia/Dubai", "Asia/Singapore", "Australia/Sydney", "UTC", ...Intl.supportedValuesOf("timeZone")].map((t) => `<option>${esc(t)}</option>`).join("")}</datalist><label class="checkbox field full"><span><input type="checkbox" name="${prefix}unknownTime" ${data.unknownTime ? "checked" : ""}> I do not know the birth time</span><small>A precise kundli requires a known time. Save this profile and add the time when available.</small></label>${field(prefix + "place", "Birthplace", "text", data.place || "", 'required list="places" placeholder="Search by city or enter a place"')}${field(prefix + "latitude", "Latitude", "number", data.latitude ?? "", 'required min="-90" max="90" step="any" placeholder="e.g. 18.5204"')}${field(prefix + "longitude", "Longitude", "number", data.longitude ?? "", 'required min="-180" max="180" step="any" placeholder="e.g. 73.8567"')}<datalist id="places"><option>Pune, India</option><option>Mumbai, India</option><option>Delhi, India</option><option>London, United Kingdom</option><option>New York, United States</option></datalist>`;
 }
 function bindPlaces() {
   $$("input[name$=place]").forEach((el) => {
@@ -368,6 +371,7 @@ function bindPlaces() {
         f.elements[prefix + "timezone"].value = p[2];
       }
     };
+    el.oninput = el.onchange;
   });
   $$("input[name$=unknownTime]").forEach((el) => {
     el.onchange = () => {
@@ -414,7 +418,7 @@ async function profiles(edit = false) {
     page(
       "Your birth profiles",
       "Keep the details that make your readings personal.",
-      `<div class="actions">${link("/profile-edit", "Add a birth profile +", "btn primary")}</div><br>${list.length ? list.map((r) => `<div class="row-card"><div><h3>${esc(r.data.name)}</h3><p>${esc(r.data.date)} · ${esc(r.data.place)} · ${r.data.unknownTime ? "Time unknown" : esc(r.data.time)}</p></div><div class="actions">${link("/profile-edit?id=" + r.id, "Edit", "btn small")}${btn("Delete", "delete:" + r.id, "small")}</div></div>`).join("") : empty("A personal starting point", "Add your birth details once and use them again for future readings.")}`,
+      `<div class="actions">${link("/profile-edit", "Add a birth profile +", "btn primary")}</div><br>${list.length ? list.map((r) => `<div class="row-card"><div><h3>${esc(r.data.name)}</h3><p>${esc(r.data.date)} · ${esc(r.data.place)} · ${r.data.unknownTime ? "Time unknown" : esc(r.data.time)}</p></div><div class="actions">${link("/profile-edit?id=" + r.id, "Edit", "btn small")}${link("/birth-details?profile=" + r.id, "Create kundli", "btn small")}${btn("Delete", "delete:" + r.id, "small")}</div></div>`).join("") : empty("A personal starting point", "Add your birth details once and use them again for future readings.")}`,
       true,
     );
   }
@@ -461,7 +465,25 @@ async function birthPage() {
     go("/kundli-overview");
   });
 }
+async function savedReadings() {
+  const [reports, charts] = await Promise.all([
+    recs("report"),
+    api("/kundli/runs"),
+  ]);
+  return [
+    ...reports,
+    ...charts
+      .filter((r) => r.state === "ready")
+      .map((r) => ({
+        ...r,
+        _kundliRun: true,
+        data: { type: "kundli", name: r.input.name },
+      })),
+  ].sort((a, b) => Date.parse(b.created) - Date.parse(a.created));
+}
 function reportRow(r) {
+  if (r._kundliRun)
+    return `<div class="row-card"><div><span class="badge">kundli</span><h3>${esc(r.data.name)}</h3><p>Saved ${localTime(r.created)}</p></div><div class="actions">${link("/kundli-overview?id=" + r.id, "Open chart →", "btn small")}${link("/kundli-saved", "Manage charts", "btn small")}</div></div>`;
   return `<div class="row-card"><div><span class="badge">${esc(r.data.type)}</span><h3>${esc(r.data.name || r.data.question || "Personal reading")}</h3><p>Saved ${localTime(r.created)}</p></div><div class="actions">${btn("Open reading →", "open-report:" + r.id, "small")}${btn("Delete", "delete:" + r.id, "small")}</div></div>`;
 }
 function reportActions() {
@@ -965,7 +987,7 @@ async function refreshMessages(bid) {
 }
 async function historyPage() {
   if (!requireLogin()) return;
-  const list = await recs("report");
+  const list = await savedReadings();
   page(
     "Your saved readings",
     "A place to return to the perspectives you want to keep.",
@@ -1862,6 +1884,7 @@ const aliases = {
 async function render() {
   clearInterval(timer);
   timer = null;
+  document.body.classList.remove("kundli-mode");
   shell();
   $("#main").innerHTML =
     '<div class="loading" role="status">Opening your space…</div>';
@@ -1927,9 +1950,31 @@ async function render() {
       $("#report-feedback").innerHTML = notice(
         "Shared reading. This link expires " + localTime(r.expires) + ".",
       );
-    } else if (p === "/kundli") kundliIntro();
-    else if (p === "/birth-details") await birthPage();
-    else if (p === "/kundli-overview") reportPage("kundli");
+    } else if (
+      [
+        "/kundli",
+        "/birth-details",
+        "/kundli-saved",
+        "/kundli-overview",
+      ].includes(p) &&
+      !(
+        p === "/kundli-overview" &&
+        report &&
+        !new URLSearchParams(location.search).has("id")
+      )
+    ) {
+      if (requireLogin())
+        await mountKundli({
+          api,
+          user,
+          status,
+          go,
+          birthFields,
+          bindPlaces,
+          normalBirth,
+          toast,
+        });
+    } else if (p === "/kundli-overview") reportPage("kundli");
     else if (p === "/numerology") numerologyPage();
     else if (p === "/numerology-report") reportPage("numerology");
     else if (p === "/tarot-reading") tarotPage();
