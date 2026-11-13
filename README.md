@@ -74,7 +74,7 @@ npm run test:cloudflare
 
 ## New kundli workspace
 
-The complete local kundli integration uses a separate isolated Python calculation service. See [integration and API mapping](docs/kundli-integration.md), [Cloud Run deployment](docs/kundli-cloudrun.md), [licence notices](chart-service/NOTICE.md) and [verified completion / remaining setup](docs/kundli-completion.md). The new service is not yet public; Google CLI login is verified; public source publication, enabled project billing and a container build are still required.
+The complete local kundli integration uses a separate isolated Python calculation service. See [integration and API mapping](docs/kundli-integration.md), [Render free deployment](docs/kundli-render.md) (selected host), [optional Cloud Run deployment](docs/kundli-cloudrun.md), [licence notices](chart-service/NOTICE.md) and [verified completion / remaining setup](docs/kundli-completion.md). The new service is not yet public. The owner selected Render free hosting instead of Google Cloud; publish the source release and verify the Render container before connecting the website. Google Cloud billing is not required for this route.
 
 
 ## Licence and corresponding source

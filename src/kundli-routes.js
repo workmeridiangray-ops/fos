@@ -79,7 +79,7 @@ export async function kundliRoutes(c) {
     if (row?.state === "ready") return reply(decode(row));
     if (
       row?.state === "pending" &&
-      Date.now() - Date.parse(row.updated) < 70000
+      Date.now() - Date.parse(row.updated) < 150000
     )
       return reply(decode(row), 202);
     await rate(u.id + ":kundli", 5);

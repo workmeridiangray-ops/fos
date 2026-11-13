@@ -29,15 +29,17 @@
 
 The direct-library check establishes mapping consistency, not independent astronomical certification. No Swiss ephemeris `.se1` files were supplied; local settings truthfully report Moshier analytical fallback. Full container build has not been run because Docker/Podman was unavailable; Cloud Build must build and test the image after project billing is enabled.
 
-## Not yet published or deployed
+## Hosting decision and publication status
 
 The kundli and AGPL source-release changes are complete locally and recorded in a release commit; public GitHub publishing and production deployment are still pending. Existing production remains the prior version at `https://flames-of-shiva.work-meridiangray.workers.dev`, with repository HEAD `615088d`. Do not describe the new calculation service as live. No Google Cloud Run service has been created or public HTTPS chart URL obtained in this task.
 
-Google Cloud CLI sign-in in task-local `work/gcloud-config` was verified on 13 November 2026, and access to the active `meridian-gray` project works. The billing API returned `billingEnabled: false`; enabling project billing is now a required deployment prerequisite. The owner selected the free AGPL route on 13 November 2026.
+The owner declined Google Cloud billing and selected Render Free (or suitable existing Hostinger hosting) on 13 November 2026. `render.yaml` and `docs/kundli-render.md` now describe the selected free Docker service. No Google Cloud resources will be deployed. The Worker upstream timeout is 120 seconds with a 150-second request reservation to accommodate free-tier wake-up.
+
+Historical Google Cloud CLI sign-in in task-local `work/gcloud-config` was verified on 13 November 2026, and access to the active `meridian-gray` project works. The billing API returned `billingEnabled: false`; this is no longer a prerequisite because the Google Cloud route was declined. The owner selected the free AGPL route on 13 November 2026.
 
 The owner authorized the free AGPLv3 route and publishing the required source on 13 November 2026. Root LICENSE licenses original application/integration code as AGPL-3.0-only. Existing upstream MIT/AGPL notices are preserved, and the exact pyswisseph 2.10.3.2 source distribution containing Swiss C source is included under third_party/sources with its verified SHA-256. Source and licence links are available without authentication on the website and chart service. The versioned source release is kundli-agpl-v1; its tag/archive must be published and verified before activation. The deployment helper checks the published archive against local critical source files and stops if source is missing/different or billing is disabled.
 
-GitHub's connected integration still returns 403 Resource not accessible by integration for repository writes. The owner's normal Chrome session is signed into the repository account, but the available native upload controls could not complete an upload preserving all folder paths. The task-local GitHub CLI device sign-in is prepared for owner authorization. A Git push dry run confirmed there was no HTTPS Git credential before this authorization. No secret, credential or personal chart was uploaded in those attempts.
+GitHub's connected integration still returns 403 Resource not accessible by integration for repository writes. The owner's normal Chrome session is signed into the repository account, but the available native upload controls could not complete an upload preserving all folder paths. The task-local GitHub CLI device sign-in is now authorized and verified. A Git push dry run confirmed there was no HTTPS Git credential before this authorization. No secret, credential or personal chart was uploaded in those attempts.
 
 No global geocoder credential/contract was supplied; five reference cities resolve locally, with manual confirmed coordinates/IANA zone for other places until the existing geocoder adapter is configured. Compatibility, interpretive predictions, email, payments and voice/video remain separate providers from the preceding website build.
 
@@ -47,11 +49,10 @@ The subsequently supplied `charnnt-api.zip` contains the previously described Do
 
 ## Exact next steps
 
-1. Have the owner enable project billing and authorize the prepared GitHub CLI device sign-in (or correct repository Contents write access). Google CLI sign-in/project access and AGPL choice are verified; recheck billingEnabled before deployment.
-2. Publish the complete committed local source, then create and verify tag kundli-agpl-v1. Source must include the dependency source tarball and preserved notices; verify raw LICENSE, source-page links and the release archive before using --license-ready.
-3. Build/deploy with `scripts-deploy-chart-cloudrun.py` (review `docs/kundli-cloudrun.md`). Resolve Cloud Build/IAM/container issues and verify health plus an authenticated synthetic chart.
-4. Publish source through the authorized GitHub route after licence readiness. Earlier CLI/plugin write access was unreliable; verify current authentication without exposing credentials. Do not publish the supplied personal fixture or local generated reports.
-5. Connect the shared Secret Manager key to Worker backend secrets, apply migration 006 remotely, deploy the tested Worker, and perform a signed-in new-chart save/reopen/fine-period/print smoke test. The helper's `--connect-worker` performs the migration/deploy/secret wiring after service health passes.
-6. Update this report with actual commit, deployed Worker version and Cloud Run HTTPS URL only after verifying them.
+1. Publish and verify complete committed source and immutable tag `kundli-agpl-v1`.
+2. Connect Render, inspect existing workspace billing settings, and create only the Free Docker service in `render.yaml`. Do not enable paid usage or use Google Cloud.
+3. Verify the remote container, source/licence endpoints and authenticated synthetic base/fine calculations, following `docs/kundli-render.md`.
+4. Set the backend-only Worker secrets, apply migration 006 remotely, deploy the tested Worker, and verify signed-in chart save/reopen/print behavior.
+5. Record the verified Git commit, Render HTTPS URL/deploy ID and Worker version here.
 
 The current checkout is `outputs/flames-of-shiva` on main, based on `615088d`. Source archive is `outputs/flames-of-shiva-source.zip` (updated after this report). Private supplied files, local test data, screenshots and PDF stay outside the repository under `work/`. Local preview processes currently use website port 3011 and Python API port 8789 with a random key retained only in process environments. They are development processes, not a public host or durable deployment.

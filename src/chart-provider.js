@@ -197,7 +197,7 @@ export async function fetchChart(env, birth, path = null) {
         include_sookshma: !!path,
         ...(path ? { dasha_path: path } : {}),
       }),
-      signal: AbortSignal.timeout(55000),
+      signal: AbortSignal.timeout(120000),
     });
   } catch {
     throw error(

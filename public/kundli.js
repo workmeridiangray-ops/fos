@@ -198,7 +198,7 @@ export async function mountKundli(context) {
       const controls = [...form.querySelectorAll("button")];
       controls.forEach((b) => (b.disabled = true));
       result.innerHTML =
-        '<div class="k-loading" role="status"><span></span>Calculating your sixteen charts and life periods. This can take up to a minute…</div>';
+        '<div class="k-loading" role="status"><span></span>Calculating your sixteen charts and life periods. This can take up to two minutes when the service is waking up…</div>';
       try {
         if (form.elements.saveProfile.checked) await saveProfile(input);
         const r = await api("/kundli/runs", "POST", {

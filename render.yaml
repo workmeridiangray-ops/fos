@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+services:
+  - type: web
+    name: flames-of-shiva-chart-api
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./chart-service/Dockerfile
+    dockerContext: ./chart-service
+    healthCheckPath: /health
+    autoDeployTrigger: off
+    envVars:
+      - key: CHART_API_KEY
+        generateValue: true
+      - key: CHART_MAX_JOBS
+        value: "1"
