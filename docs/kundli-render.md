@@ -22,3 +22,7 @@ Local synthetic D1–D60 calculation measured 19.7 MiB peak child RSS and 0.04 s
 6. Record the actual URL, service/deploy ID, Git commit and Worker version in the completion report.
 
 References: https://render.com/docs/free and https://render.com/docs/blueprint-spec
+
+## Actual deployment
+
+Service `srv-dbrfk356e07s73bi0l60` in the owner-confirmed `mg` workspace is live at https://flames-of-shiva-chart-api.onrender.com on Free compute, Singapore. It was created directly with the official Render CLI using `chart-service` as root directory; default Docker context `.` and Dockerfile `./Dockerfile` are relative to that root and match the Blueprint build inputs. Auto-deploy is off. The API key is generated and stored as a Render environment variable. Deploy `dep-dbrj3h56e07s73bsj9e0` activated it; base/fine calculation and source/licence checks passed. No paid compute or Google Cloud resource was created. Cloudflare connection is pending renewed CLI authentication.
